@@ -39,7 +39,7 @@ public class MainActivity extends Activity implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
-        Log.e("onLocationChanged", new String("entered"));
+        Log.e("onLocationChanged", "entered");
         if (updateLocation) {
         String latitude = "" + location.getLatitude();
         latitudeDisp.setText(latitude);
@@ -93,7 +93,6 @@ public class MainActivity extends Activity implements LocationListener {
 
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) {
-        // TODO Auto-generated method stub
 
     }
 
