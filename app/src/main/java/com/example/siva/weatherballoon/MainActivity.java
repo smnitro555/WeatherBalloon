@@ -1,21 +1,69 @@
 package com.example.siva.weatherballoon;
 
-import android.support.v7.app.AppCompatActivity;
+import android.app.Activity;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.ToggleButton;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity implements LocationListener {
 
-    ToggleButton serviceOn;
+    ToggleButton serviceOn, locationOn;
     TextView latitudeDisp, longitudeDisp, altitudeDisp;
+    LocationManager locationManager;
+    boolean sendData = false;
+    boolean updateLocation = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        serviceOn = (ToggleButton) findViewById(R.id.sendService);
+        locationOn = (ToggleButton) findViewById(R.id.LocationOn);
+        latitudeDisp = (TextView) findViewById(R.id.latitude);
+        longitudeDisp = (TextView) findViewById(R.id.longitude);
+        altitudeDisp = (TextView) findViewById(R.id.altitude);
+        locationManager = (LocationManager) getSystemService(this.LOCATION_SERVICE);
+
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 3000, 10, this);
+    }
+
+    /************* Called after each 3 sec **********/
+    @Override
+    public void onLocationChanged(Location location) {
+
+        if (updateLocation) {
+        String latitude = "" + location.getLatitude();
+        latitudeDisp.setText(latitude);
+        String longitude = "" + location.getLongitude();
+        longitudeDisp.setText(longitude);
+        String altitude = "" + location.getAltitude();
+        altitudeDisp.setText(altitude);
+            if (sendData) {
+                /* Will send the SMS here*/
+            }
+        }
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+
+        /******** Called when User off Gps *********/
+
+        Toast.makeText(getBaseContext(), "Gps turned off ", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+
+        /******** Called when User on Gps  *********/
+
+        Toast.makeText(getBaseContext(), "Gps turned on ", Toast.LENGTH_LONG).show();
     }
 
     @Override
@@ -39,4 +87,11 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+        // TODO Auto-generated method stub
+
+    }
+
 }

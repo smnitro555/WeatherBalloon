@@ -21,6 +21,19 @@
         android:layout_height="wrap_content"
         android:id="@+id/sendService"
         android:layout_gravity="center"
+        android:textOn="Sending to Phone"
+        android:textOff="Not Sending to Phone"
+        android:onClick="smsService"
+        />
+
+    <ToggleButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/LocationOn"
+        android:onClick="locationService"
+        android:layout_gravity="center"
+        android:textOn="Location Data Tracking On"
+        android:textOff="Location Data Tracking Off"
         />
 
     <TextView
