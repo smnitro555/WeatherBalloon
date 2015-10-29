@@ -5,6 +5,7 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -26,17 +27,19 @@ public class MainActivity extends Activity implements LocationListener {
         serviceOn = (ToggleButton) findViewById(R.id.sendService);
         locationOn = (ToggleButton) findViewById(R.id.LocationOn);
         latitudeDisp = (TextView) findViewById(R.id.latitude);
+        latitudeDisp.setText("0.0");
         longitudeDisp = (TextView) findViewById(R.id.longitude);
+        longitudeDisp.setText("0.0");
         altitudeDisp = (TextView) findViewById(R.id.altitude);
+        altitudeDisp.setText("0.0");
         locationManager = (LocationManager) getSystemService(this.LOCATION_SERVICE);
 
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 3000, 10, this);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 300, 10, this);
     }
 
-    /************* Called after each 3 sec **********/
     @Override
     public void onLocationChanged(Location location) {
-
+        Log.e("onLocationChanged", new String("entered"));
         if (updateLocation) {
         String latitude = "" + location.getLatitude();
         latitudeDisp.setText(latitude);
